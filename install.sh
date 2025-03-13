@@ -1,6 +1,12 @@
 #!/bin/bash
 
-# apt
+LOG_FILE="install.log"
+
+rm -f "$LOG_FILE"
+
+log() {
+  echo "$1" | tee -a "$LOG_FILE"
+}
 
 # ──────────────────────────────────────────
 # System Update & Package Installation
@@ -12,16 +18,16 @@ sudo -v
 # Update and upgrade system packages
 sudo apt update && sudo apt upgrade -y
 
-
 # ──────────────────────────────────────────
 # Install Alacritty Terminal
 # ──────────────────────────────────────────
 
+log "Installing Alacritty..."
 sudo apt install -y alacritty
 
 # Verify installation
 if command -v alacritty &> /dev/null; then
-  echo "Alacritty installed successfully: $(alacritty -V)"
+  log "Alacritty installed successfully: $(alacritty -V)"
 else
-  echo "Alacritty installation failed"
+  log "Alacritty installation failed"
 fi
